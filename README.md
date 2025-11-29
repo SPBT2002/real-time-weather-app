@@ -2,7 +2,7 @@
 
 A full-stack weather application that displays real-time weather information for multiple cities with a beautiful, responsive UI and authentication powered by Auth0.
 
-![Weather App](./frontend/src/assets/overview.png)
+
 
 ## Features
 
@@ -103,8 +103,14 @@ Open your browser and navigate to:
 ```
 http://localhost:5173
 ```
+## Test User Credentials
 
-## 6. Usage
+Use these credentials to log in:
+
+- **Email:** careers@fidenz.com
+- **Password:** Pass#fidenz
+
+## 5. Usage
 
 1. **Login** - Click the login button and authenticate via Auth0
 2. **View Weather** - See weather cards for all configured cities
@@ -112,36 +118,156 @@ http://localhost:5173
 4. **Auto-Update** - Weather data refreshes automatically every 5 minutes
 5. **Logout** - Click the logout button in the top-right corner
 
-## 7. Project Structure
+## 6. Project Structure
 
 ```
-weatherApp/
+weather-dashboard/
 ├── backend/
-│   ├── app.js                 # Express server entry point
-│   ├── cities.json            # List of cities to fetch weather for
-│   ├── package.json           # Backend dependencies
+│   ├── app.js                    # Express server & API endpoints
+│   ├── cities.json               # List of cities to fetch weather for
+│   ├── package.json              # Backend dependencies
+│   ├── .env                      # Environment variables (not in repo)
 │   ├── cache/
-│   │   └── cache.js          # Caching utility
+│   │   └── cache.js              # Caching utility (if used)
 │   └── utils/
-│       └── weatherData.js    # OpenWeatherMap API integration
+│       └── weatherData.js        # OpenWeatherMap API integration
 │
 ├── frontend/
+│   ├── public/                   # Static assets
 │   ├── src/
-│   │   ├── App.jsx           # Main application component
-│   │   ├── main.jsx          # React entry point
-│   │   ├── components/
-│   │   │   ├── Dashboard/    # Main dashboard view
-│   │   │   ├── Login/        # Login page
-│   │   │   ├── WeatherCard/  # Individual weather card
-│   │   │   └── ProtectedRoute/ # Route protection
-│   │   └── assets/
-│   │       └── icons/        # Weather icons
-│   ├── index.html
-│   ├── package.json          # Frontend dependencies
-│   └── vite.config.js        # Vite configuration
+│   │   ├── App.jsx               # Main application component
+│   │   ├── App.css               # Global styles
+│   │   ├── main.jsx              # React entry point
+│   │   ├── index.css             # Base styles
+│   │   ├── assets/
+│   │   │   ├── bg.jpg            # Background image
+│   │   │   └── icons/            # Weather icons
+│   │   │       ├── clear.png
+│   │   │       ├── cloud.png
+│   │   │       ├── mist.png
+│   │   │       ├── rain.png
+│   │   │       ├── snow.png
+│   │   │       └── weather.png
+│   │   └── components/
+│   │       ├── Dashboard/
+│   │       │   ├── Dashboard.jsx      # Main dashboard view
+│   │       │   └── Dashboard.css      # Dashboard styles
+│   │       ├── Login/
+│   │       │   ├── Login.jsx          # Login page with auth
+│   │       │   └── Login.css          # Login styles
+│   │       ├── WeatherCard/
+│   │       │   ├── WeatherCard.jsx    # Weather card component
+│   │       │   └── WeatherCard.css    # Card styles
+│   │       └── ProtectedRoute/
+│   │           └── ProtectedRoute.jsx # Route authentication guard
+│   ├── index.html                # HTML entry point
+│   ├── package.json              # Frontend dependencies
+│   ├── vite.config.js            # Vite configuration
+│   ├── eslint.config.js          # ESLint configuration
+│   ├── .env                      # Environment variables (not in repo)
+│   └── README.md                 # Frontend documentation
 │
-└── README.md                  # This file
+├── README.md                     # Main project documentation
+├── AUTHENTICATION_README.md      # Authentication setup guide
+└── .gitignore                    # Git ignore rules
 ```
+
+## 7. Comfort Index Score System
+
+### Formula Explanation
+
+The Comfort Index Score is a **numerical value from 0-100** that ranks cities from "Most Comfortable" to "Least Comfortable" based on weather conditions. The score is **calculated on the backend** using three key weather parameters:
+
+#### **Formula Components:**
+
+```javascript
+Comfort Score = (Temperature Score × 50%) + (Humidity Score × 30%) + (Wind Speed Score × 20%)
+```
+
+#### **Parameter Breakdown:**
+
+| Parameter | Weight | Optimal Range | Reasoning |
+|-----------|--------|---------------|-----------|
+| **Temperature** | 50% | 18-24°C (64-75°F) | Most significant factor affecting human comfort |
+| **Humidity** | 30% | 30-60% | Significantly impacts perceived temperature and comfort |
+| **Wind Speed** | 20% | 0-5 m/s | Affects perceived temperature (wind chill/heat index) |
+
+### Why This Formula?
+
+#### 1. **Temperature (50% weight)**
+- **Primary comfort factor**: Temperature has the most direct and immediate impact on how comfortable we feel
+- **Wide consensus**: Research shows temperature is universally the #1 factor in thermal comfort
+- **Measurable impact**: Outside optimal range (18-24°C), comfort decreases rapidly
+
+#### 2. **Humidity (30% weight)**
+- **Secondary importance**: High humidity makes heat feel worse; low humidity causes dryness
+- **Health impact**: Affects breathing, skin comfort, and how the body regulates temperature
+- **Amplifies temperature**: 30°C at 80% humidity feels worse than 30°C at 40% humidity
+
+#### 3. **Wind Speed (20% weight)**
+- **Modifying factor**: Wind doesn't create discomfort alone but modifies temperature perception
+- **Situational**: Light breeze (2-5 m/s) can be pleasant; strong wind (>10 m/s) is uncomfortable
+- **Lower weight justified**: Less impactful than temperature and humidity in most scenarios
+
+### Scoring Logic
+
+Each parameter receives a score from 0-100 based on how close it is to the optimal range:
+
+#### **Temperature Scoring:**
+```
+18-24°C  → 100 points (Perfect)
+15-18°C  → 80-50 points (Cool but acceptable)
+24-28°C  → 80-50 points (Warm but acceptable)
+<15°C    → <50 points (Cold)
+>28°C    → <50 points (Hot)
+<5°C or >38°C → Near 0 (Extreme)
+```
+
+#### **Humidity Scoring:**
+```
+30-60%   → 100 points (Ideal)
+20-30%   → 80-60 points (Slightly dry)
+60-70%   → 80-60 points (Slightly humid)
+<20% or >85% → <40 points (Very dry or very humid)
+```
+
+#### **Wind Speed Scoring:**
+```
+0-2 m/s  → 100 points (Calm)
+2-5 m/s  → 100-70 points (Light breeze)
+5-10 m/s → 70-30 points (Moderate wind)
+>15 m/s  → <10 points (Strong/uncomfortable)
+```
+
+### Example Calculation
+
+**City: London**
+- Temperature: 22°C → Score: 100 (perfect range)
+- Humidity: 45% → Score: 100 (perfect range)
+- Wind Speed: 3 m/s → Score: 90 (light breeze)
+
+**Comfort Score = (100 × 0.5) + (100 × 0.3) + (90 × 0.2) = 50 + 30 + 18 = 98.0**
+
+**Result: Rank #1 - Excellent Comfort** 🟢
+
+### Display System
+
+The comfort score is displayed with color-coded indicators:
+
+| Score Range | Level | Color | Description |
+|-------------|-------|-------|-------------|
+| 80-100 | Excellent | 🟢 Green | Ideal weather conditions |
+| 65-79 | Good | 🔵 Blue | Very comfortable |
+| 50-64 | Moderate | 🟡 Orange | Acceptable conditions |
+| 35-49 | Fair | 🔴 Red | Some discomfort expected |
+| 0-34 | Poor | 🔴 Dark Red | Uncomfortable conditions |
+
+### Implementation
+
+- ✅ **Backend calculation** - Scores computed in `app.js` (lines 74-146)
+- ✅ **Automatic ranking** - Cities sorted by score (highest to lowest)
+- ✅ **Real-time updates** - Recalculated every 5 minutes with fresh weather data
+- ✅ **Cached results** - Efficient API usage with server-side caching
 
 ## 8. API Endpoints
 
@@ -180,7 +306,7 @@ VITE_AUTH0_CLIENT_ID=your_client_id   # Auth0 client ID
 ```
 
 ## 11. Author
-**Oditha Weerasekara**
+**Supun Piyumal**
 
 ## 12. Acknowledgments
 
