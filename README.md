@@ -42,7 +42,7 @@ Before you begin, ensure you have the following installed:
 
 ```bash
 git clone https://github.com/SPBT2002/real-time-weather-app.git
-cd weatherApp
+
 ```
 
 ### 2. Backend Setup
@@ -66,7 +66,7 @@ API_KEY_OWM=your_openweathermap_api_key_here
 Navigate to the frontend directory and install dependencies:
 
 ```bash
-cd ../frontend
+cd frontend
 npm install
 ```
 
@@ -164,11 +164,9 @@ weather-dashboard/
 │   ├── package.json              # Frontend dependencies
 │   ├── vite.config.js            # Vite configuration
 │   ├── eslint.config.js          # ESLint configuration
-│   ├── .env                      # Environment variables (not in repo)
-│   └── README.md                 # Frontend documentation
+│   └── .env                      # Environment variables (not in repo)
 │
 ├── README.md                     # Main project documentation
-├── AUTHENTICATION_README.md      # Authentication setup guide
 └── .gitignore                    # Git ignore rules
 ```
 
@@ -259,8 +257,8 @@ The comfort score is displayed with color-coded indicators:
 | 80-100 | Excellent | 🟢 Green | Ideal weather conditions |
 | 65-79 | Good | 🔵 Blue | Very comfortable |
 | 50-64 | Moderate | 🟡 Orange | Acceptable conditions |
-| 35-49 | Fair | 🔴 Red | Some discomfort expected |
-| 0-34 | Poor | 🔴 Dark Red | Uncomfortable conditions |
+| 35-49 | Fair | 🟣 Purpel | Some discomfort expected |
+| 0-34 | Poor | 🔴 Red | Uncomfortable conditions |
 
 ### Implementation
 
