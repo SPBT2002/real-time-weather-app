@@ -8,13 +8,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Redirect root to login */}
         <Route path="/" element={<Navigate to="/login" replace />} />
         
-        {/* Login route */}
         <Route path="/login" element={<Login />} />
         
-        {/* Protected Dashboard route */}
+      
         <Route 
           path="/dashboard" 
           element={
@@ -24,7 +22,6 @@ function App() {
           } 
         />
         
-        {/* Catch all - redirect to login */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>

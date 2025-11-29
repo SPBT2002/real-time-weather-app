@@ -14,7 +14,7 @@
   overflow: hidden;
 }
 
-/* Dark overlay for better card contrast */
+
 .login-container::before {
   content: '';
   position: absolute;
@@ -26,7 +26,6 @@
   z-index: 0;
 }
 
-/* Removed floating shapes - using bg.jpg background instead */
 
 /* Login Card */
 .login-card {
@@ -66,7 +65,7 @@
 .icon-wrapper {
   display: inline-block;
   padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #6f64ef;
   border-radius: 20px;
   margin-bottom: 16px;
   animation: pulse 2s infinite;
@@ -118,19 +117,6 @@
   margin-bottom: 24px;
 }
 
-.form-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 8px;
-}
-
-.label-icon {
-  font-size: 16px;
-}
 
 .form-input {
   width: 100%;
@@ -217,7 +203,7 @@
 .login-btn {
   width: 100%;
   padding: 16px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #6f64ef;
   color: white;
   border: none;
   border-radius: 10px;
@@ -265,28 +251,6 @@
   }
 }
 
-/* Info Badge */
-.login-info {
-  margin-top: 24px;
-  text-align: center;
-}
-
-.info-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  background: #fef3c7;
-  border: 1px solid #fcd34d;
-  border-radius: 20px;
-  color: #92400e;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.badge-icon {
-  font-size: 14px;
-}
 
 /* Footer */
 .login-footer {

@@ -9,7 +9,7 @@
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #6f64ef;
     border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
@@ -46,7 +46,7 @@
 .rank-number {
     font-size: 20px;
     font-weight: 800;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #6f64ef;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -89,23 +89,23 @@
 }
 
 .card-blue {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #6f64ef;
 }
 
 .card-purple {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #6f64ef;
 }
 
 .card-green {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #6f64ef;
 }
 
 .card-orange {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #6f64ef;
 }
 
 .card-red {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #6f64ef;
 }
 
 .close-btn {

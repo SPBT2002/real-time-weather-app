@@ -23,7 +23,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // Set to true in production with HTTPS
+    secure: false, 
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
@@ -38,8 +38,7 @@ const WHITELISTED_USERS = [
   }
 ];
 
-// Utility function to generate password hash
-// Usage: node -e "require('./app.js').generatePasswordHash('YourPassword')"
+
 function generatePasswordHash(password) {
   bcrypt.hash(password, 10, (err, hash) => {
     if (err) {
@@ -52,12 +51,12 @@ function generatePasswordHash(password) {
   });
 }
 
-// Helper function to verify password
+
 async function verifyPassword(plainPassword, hashedPassword) {
   return await bcrypt.compare(plainPassword, hashedPassword);
 }
 
-// Authentication middleware
+
 function requireAuth(req, res, next) {
   const token = req.cookies.authToken || req.headers.authorization?.split(' ')[1];
   
@@ -84,26 +83,26 @@ const CACHE_DURATION = 5 * 60 * 1000;
 
 
 function calculateComfortScore(weatherData) {
-  // Temperature score (50% weight) - Optimal: 18-24°C
+
   const tempCelsius = weatherData.main.temp - 273.15;
   let tempScore = 0;
   
   if (tempCelsius >= 18 && tempCelsius <= 24) {
-    tempScore = 100; // Perfect temperature range
+    tempScore = 100;
   } else if (tempCelsius >= 15 && tempCelsius < 18) {
-    tempScore = 80 - ((18 - tempCelsius) * 10); // Slightly cool
+    tempScore = 80 - ((18 - tempCelsius) * 10);
   } else if (tempCelsius > 24 && tempCelsius <= 28) {
-    tempScore = 80 - ((tempCelsius - 24) * 10); // Slightly warm
+    tempScore = 80 - ((tempCelsius - 24) * 10);
   } else if (tempCelsius >= 10 && tempCelsius < 15) {
-    tempScore = 60 - ((15 - tempCelsius) * 8); // Cool
+    tempScore = 60 - ((15 - tempCelsius) * 8);
   } else if (tempCelsius > 28 && tempCelsius <= 32) {
-    tempScore = 60 - ((tempCelsius - 28) * 10); // Warm
+    tempScore = 60 - ((tempCelsius - 28) * 10);
   } else if (tempCelsius >= 5 && tempCelsius < 10) {
-    tempScore = 40 - ((10 - tempCelsius) * 6); // Cold
+    tempScore = 40 - ((10 - tempCelsius) * 6);
   } else if (tempCelsius > 32 && tempCelsius <= 38) {
-    tempScore = 40 - ((tempCelsius - 32) * 5); // Hot
+    tempScore = 40 - ((tempCelsius - 32) * 5);
   } else {
-    tempScore = Math.max(0, 20 - Math.abs(tempCelsius - 21) * 2); // Too extreme
+    tempScore = Math.max(0, 20 - Math.abs(tempCelsius - 21) * 2);
   }
 
   // Humidity score (30% weight) - Optimal: 30-60%
@@ -111,19 +110,19 @@ function calculateComfortScore(weatherData) {
   let humidityScore = 0;
   
   if (humidity >= 30 && humidity <= 60) {
-    humidityScore = 100; // Perfect humidity range
+    humidityScore = 100;
   } else if (humidity >= 20 && humidity < 30) {
-    humidityScore = 80 - ((30 - humidity) * 2); // Slightly dry
+    humidityScore = 80 - ((30 - humidity) * 2);
   } else if (humidity > 60 && humidity <= 70) {
-    humidityScore = 80 - ((humidity - 60) * 2); // Slightly humid
+    humidityScore = 80 - ((humidity - 60) * 2);
   } else if (humidity >= 10 && humidity < 20) {
-    humidityScore = 60 - ((20 - humidity) * 3); // Dry
+    humidityScore = 60 - ((20 - humidity) * 3);
   } else if (humidity > 70 && humidity <= 85) {
-    humidityScore = 60 - ((humidity - 70) * 2); // Humid
+    humidityScore = 60 - ((humidity - 70) * 2);
   } else if (humidity < 10) {
-    humidityScore = Math.max(0, 30 - (10 - humidity) * 5); // Very dry
+    humidityScore = Math.max(0, 30 - (10 - humidity) * 5);
   } else {
-    humidityScore = Math.max(0, 30 - (humidity - 85) * 3); // Very humid
+    humidityScore = Math.max(0, 30 - (humidity - 85) * 3);
   }
 
   // Wind Speed score (20% weight) - Lower is better, optimal: 0-5 m/s
@@ -131,15 +130,15 @@ function calculateComfortScore(weatherData) {
   let windScore = 0;
   
   if (windSpeed <= 2) {
-    windScore = 100; // Calm, ideal conditions
+    windScore = 100;
   } else if (windSpeed <= 5) {
-    windScore = 100 - ((windSpeed - 2) * 10); // Light breeze
+    windScore = 100 - ((windSpeed - 2) * 10);
   } else if (windSpeed <= 10) {
-    windScore = 70 - ((windSpeed - 5) * 8); // Moderate wind
+    windScore = 70 - ((windSpeed - 5) * 8);
   } else if (windSpeed <= 15) {
-    windScore = 30 - ((windSpeed - 10) * 4); // Strong wind
+    windScore = 30 - ((windSpeed - 10) * 4);
   } else {
-    windScore = Math.max(0, 10 - (windSpeed - 15) * 2); // Very windy
+    windScore = Math.max(0, 10 - (windSpeed - 15) * 2);
   }
 
   // Calculate weighted total score
@@ -149,7 +148,7 @@ function calculateComfortScore(weatherData) {
     (windScore * 0.20)        
   );
 
-  // Return score rounded to 1 decimal place
+
   return Math.round(totalScore * 10) / 10;
 }
 
@@ -162,7 +161,7 @@ app.post('/api/login', async (req, res) => {
       return res.status(400).json({ message: 'Email and password are required' });
     }
     
-    // Find user in whitelist
+   
     const user = WHITELISTED_USERS.find(u => u.email === email);
     
     if (!user) {
@@ -202,13 +201,13 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// Logout endpoint
+
 app.post('/api/logout', (req, res) => {
   res.clearCookie('authToken');
   res.json({ success: true, message: 'Logged out successfully' });
 });
 
-// Check authentication status
+
 app.get('/api/auth/check', requireAuth, (req, res) => {
   res.json({ authenticated: true, user: req.user });
 });

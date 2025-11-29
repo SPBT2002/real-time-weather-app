@@ -4,7 +4,7 @@ import compassIcon from '../../assets/icons/compass.png';
 
 const WeatherCard = ({ city, country, date, temp, tempMin, tempMax, description, icon, pressure, humidity, visibility, sunrise, sunset, wind, cardColor, onClick, comfortScore, rank }) => {
     
-    // Get comfort level text and color based on score
+
     const getComfortLevel = (score) => {
         if (score >= 80) return { text: 'Excellent', color: '#10b981' };
         if (score >= 65) return { text: 'Good', color: '#3b82f6' };

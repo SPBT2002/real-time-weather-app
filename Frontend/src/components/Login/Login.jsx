@@ -51,11 +51,11 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Store token in localStorage
+        
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('userEmail', data.user.email);
         
-        // Navigate to dashboard
+        
         navigate('/dashboard');
       } else {
         setError(data.message || 'Login failed');
@@ -82,7 +82,6 @@ const Login = () => {
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
             <label htmlFor="email" className="form-label">
-              <span className="label-icon">📧</span>
               Email Address
             </label>
             <input
@@ -99,7 +98,6 @@ const Login = () => {
 
           <div className="form-group">
             <label htmlFor="password" className="form-label">
-              <span className="label-icon">🔒</span>
               Password
             </label>
             <div className="password-input-wrapper">
@@ -143,19 +141,12 @@ const Login = () => {
               </>
             ) : (
               <>
-                <span className="btn-icon">🚀</span>
                 Sign In
               </>
             )}
           </button>
         </form>
 
-        <div className="login-info">
-          <div className="info-badge">
-            <span className="badge-icon">🔐</span>
-            <span>Restricted Access - Whitelisted Users Only</span>
-          </div>
-        </div>
       </div>
 
       <footer className="login-footer">
