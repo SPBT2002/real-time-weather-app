@@ -1,0 +1,382 @@
+.dashboard {
+    min-height: 100vh;
+    background-image: url('/src/assets/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 40px 20px;
+    position: relative;
+}
+
+.dashboard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(20, 30, 48, 0.7);
+    z-index: 0;
+}
+
+.dashboard > * {
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 0 20px;
+    position: relative;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-right {
+    position: absolute; 
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.app-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+
+.app-title .weather-icon {
+    font-size: 32px;
+}
+
+.app-weather-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.app-title h1 {
+    color: white !important;
+    font-size: 44px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.update-time {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    margin: 0;
+}
+
+.logout-btn {
+    padding: 10px 20px;
+    background: rgb(244, 53, 53);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Comfort Ranking Header */
+.comfort-ranking-header {
+    text-align: center;
+    margin: 0 auto 40px;
+    max-width: 800px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.comfort-ranking-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ranking-description {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .comfort-ranking-header {
+        padding: 20px 16px;
+    }
+    
+    .comfort-ranking-header h2 {
+        font-size: 22px;
+    }
+    
+    .ranking-description {
+        font-size: 13px;
+    }
+}
+
+.weather-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+@media (min-width: 768px) {
+    .weather-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .weather-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Mobile responsiveness for header */
+@media (max-width: 640px) {
+    .dashboard-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .header-right {
+        position: static; 
+        transform: none;
+    }
+
+    .app-title h1 {
+        font-size: 24px;
+    }
+
+    .app-title .weather-icon {
+        font-size: 24px;
+    }
+}
+
+.dashboard-footer {
+    margin-top: 80px;
+    padding: 40px 20px;
+    background: rgba(20, 30, 48, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.footer-icon {
+    width: 50px;
+    height: 50px;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+}
+
+.footer-text h3 {
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
+
+.footer-text p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    margin: 0;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.footer-credit {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    margin: 0 0 8px 0;
+    font-weight: 500;
+}
+
+.footer-credit span {
+    color: #667eea;
+    font-weight: 700;
+}
+
+.footer-year {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .footer-left {
+        flex-direction: column;
+    }
+
+    .footer-right {
+        text-align: center;
+    }
+}
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-content {
+    position: relative;
+    border-radius: 12px;
+    padding: 50px;
+    max-width: 500px;
+    transform: scale(1.5);
+    width: 100%;
+    color: #fff;
+    margin: auto;
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* Modal back button*/
+.modal-back-btn {
+    position: absolute;
+    top: 56px;
+    left: 56px;
+    padding: 0px 16px;
+    background: none;
+    color: #1c066c;
+    border: none;
+    border-radius: 6px;
+    font-size: 30px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 100;
+}
+
+/* Disable hover animation on popup cards */
+.modal-content .weather-card:hover {
+    transform: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Make cards obviously clickable */
+.is-clickable {
+    cursor: pointer;
+}
+
+/* Mobile responsiveness for modal popup */
+@media (max-width: 1024px) {
+    .modal-content {
+        transform: scale(2);
+        padding: 80px;
+    }
+    
+    .modal-back-btn {
+        top: 86px;
+        left: 86px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-overlay {
+        padding: 75px;
+    }
+    
+    .modal-content {
+        transform: scale(1.5);
+        padding: 30px;
+        max-width: 100%;
+    }
+    
+    .modal-back-btn {
+        top: 36px;
+        left: 36px;
+        font-size: 12px;
+        padding: 0px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Disable popup on small mobile devices */
+    .modal-overlay {
+        display: none !important;
+    }
+    
+    /* Remove clickable cursor on mobile */
+    .is-clickable {
+        cursor: default;
+    }
+}
