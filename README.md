@@ -41,7 +41,7 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/oditha4523/WeatherApp.git
+git clone https://github.com/SPBT2002/real-time-weather-app.git
 cd weatherApp
 ```
 
