@@ -256,8 +256,8 @@ The comfort score is displayed with color-coded indicators:
 |-------------|-------|-------|-------------|
 | 80-100 | Excellent | 🟢 Green | Ideal weather conditions |
 | 65-79 | Good | 🔵 Blue | Very comfortable |
-| 50-64 | Moderate | 🟡 Orange | Acceptable conditions |
-| 35-49 | Fair | 🟣 Purpel | Some discomfort expected |
+| 50-64 | Moderate | 🟠 Orange | Acceptable conditions |
+| 35-49 | Fair | 🟣 Purple | Some discomfort expected |
 | 0-34 | Poor | 🔴 Red | Uncomfortable conditions |
 
 ### Implementation
