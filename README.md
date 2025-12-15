@@ -6,7 +6,8 @@ A full-stack weather application that displays real-time weather information for
 
 ## Features
 
-- 🔐 **Auth0 Authentication** - Secure login/logout functionality
+- 🔐 **User Authentication** - Secure signup/login with JWT and bcrypt
+- 👥 **Public Registration** - Open signup for all users
 - 🌍 **Multi-City Weather** - View weather for multiple cities simultaneously
 - 🔄 **Auto-Refresh** - Weather data updates automatically every 5 minutes
 - 💾 **Server-Side Caching** - Efficient API usage with 5-minute cache
@@ -42,7 +43,7 @@ Before you begin, ensure you have the following installed:
 
 ```bash
 git clone https://github.com/SPBT2002/real-time-weather-app.git
-
+cd real-time-weather-app
 ```
 
 ### 2. Backend Setup
@@ -105,18 +106,18 @@ http://localhost:5173
 ```
 ## Test User Credentials
 
-Use these credentials to log in:
+Default Admin User to log in:
 
-- **Email:** careers@fidenz.com
+- **Email:** supunpiyumal127@gmail.com
 - **Password:** Pass#fidenz
 
 ## 5. Usage
-
-1. **Login** - Click the login button and authenticate via Auth0
-2. **View Weather** - See weather cards for all configured cities
-3. **Click Cards** - Click any weather card to view detailed information in a popup
-4. **Auto-Update** - Weather data refreshes automatically every 5 minutes
-5. **Logout** - Click the logout button in the top-right corner
+1. **Sign Up** - Create a new account with your email and password (min 6 characters)
+2. **Login** - Click the login button and authenticate via Auth0
+3. **View Weather** - See weather cards for all configured cities
+4. **Click Cards** - Click any weather card to view detailed information in a popup
+5. **Auto-Update** - Weather data refreshes automatically every 5 minutes
+6. **Logout** - Click the logout button in the top-right corner
 
 ## 6. Project Structure
 
@@ -155,6 +156,9 @@ weather-dashboard/
 │   │       ├── Login/
 │   │       │   ├── Login.jsx          # Login page with auth
 │   │       │   └── Login.css          # Login styles
+│   │       ├── Signup/
+│   │       │   ├── Signup.jsx         # User registration page
+│   │       │   └── Signup.css         # Signup styles
 │   │       ├── WeatherCard/
 │   │       │   ├── WeatherCard.jsx    # Weather card component
 │   │       │   └── WeatherCard.css    # Card styles
