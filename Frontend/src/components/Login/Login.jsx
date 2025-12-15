@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 import weatherIcon from '../../assets/icons/weather.png';
 
@@ -145,6 +145,11 @@ const Login = () => {
               </>
             )}
           </button>
+
+          <div className="signup-link">
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </div>
+          
         </form>
 
       </div>
