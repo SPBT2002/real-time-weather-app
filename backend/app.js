@@ -29,14 +29,15 @@ app.use(session({
   }
 }));
 
-// Whitelisted users - Only these users can login
-const WHITELISTED_USERS = [
-  {
-    email: 'careers@fidenz.com',
-    // Password: Pass#fidenz (pre-hashed)
-    passwordHash: '$2b$10$V0ykiFCM8KsYVb7T2Emu0e4xD3QkOaXpGg8aeAZOQGuj1p30zKuZi'
-  }
-];
+
+// In-memory user storage (replace with database in production)
+const registeredUsers = [];
+
+// Initialize with the existing admin user
+registeredUsers.push({
+  email: 'supunpiyumal127@gmail.com',
+  passwordHash: '$2b$10$V0ykiFCM8KsYVb7T2Emu0e4xD3QkOaXpGg8aeAZOQGuj1p30zKuZi'
+});
 
 
 function generatePasswordHash(password) {
@@ -152,7 +153,7 @@ function calculateComfortScore(weatherData) {
   return Math.round(totalScore * 10) / 10;
 }
 
-// Login endpoint - Only whitelisted users can access
+// Login endpoint - Now accepts all registered users
 app.post('/api/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -161,11 +162,11 @@ app.post('/api/login', async (req, res) => {
       return res.status(400).json({ message: 'Email and password are required' });
     }
     
-   
-    const user = WHITELISTED_USERS.find(u => u.email === email);
+    // Find user in registered users
+    const user = registeredUsers.find(u => u.email === email);
     
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials. Only whitelisted users can access.' });
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
     
     // Verify password
@@ -175,14 +176,14 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     
-    
+    // Generate JWT token
     const token = jwt.sign(
       { email: user.email },
       process.env.JWT_SECRET || 'your-jwt-secret-change-in-production',
       { expiresIn: '1h' }
     );
     
-    
+    // Set HTTP-only cookie
     res.cookie('authToken', token, {
       httpOnly: true,
       secure: false, 
@@ -201,6 +202,70 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Signup endpoint - Allow public registration
+app.post('/api/signup', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    
+    // Validation
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required' });
+    }
+    
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Invalid email format' });
+    }
+    
+    // Password strength validation
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+    }
+    
+    // Check if user already exists
+    const existingUser = registeredUsers.find(u => u.email === email);
+    if (existingUser) {
+      return res.status(409).json({ message: 'User already exists' });
+    }
+    
+    // Hash the password
+    const passwordHash = await bcrypt.hash(password, 10);
+    
+    // Create new user
+    const newUser = {
+      email,
+      passwordHash,
+      createdAt: new Date()
+    };
+    
+    registeredUsers.push(newUser);
+    
+    // Generate token
+    const token = jwt.sign(
+      { email: newUser.email },
+      process.env.JWT_SECRET || 'your-jwt-secret-change-in-production',
+      { expiresIn: '1h' }
+    );
+    
+    // Set cookie
+    res.cookie('authToken', token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    });
+    
+    res.status(201).json({
+      success: true,
+      message: 'Registration successful',
+      user: { email: newUser.email },
+      token
+    });
+  } catch (error) {
+    console.error('Signup error:', error);
+    res.status(500).json({ message: 'Server error during registration' });
+  }
+});
 
 app.post('/api/logout', (req, res) => {
   res.clearCookie('authToken');
